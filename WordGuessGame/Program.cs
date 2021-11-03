@@ -1,5 +1,5 @@
-﻿using WordGuessLibrary;
-using static System.Console;
+﻿using System;
+using WordGuessLibrary;
 
 namespace WordGuessGame{
 	internal class Program{
@@ -7,28 +7,29 @@ namespace WordGuessGame{
 			OutputEncoding = InputEncoding = System.Text.Encoding.Unicode;
 			string word, description;
 			do{
-				Write("Введите слово: ");
+				Console.Write("Введите слово: ");
 				word = ReadLine();
-				Write("Опишите слово: ");
-				description = ReadLine();
+				Console.Write("Опишите слово: ");
+				description = Console.ReadLine();
 			}
 			while(!WordGuess.IsWord(word) || string.IsNullOrEmpty(description));
 			string wordGuessed = new string('*', word.Length);
 			do{
 				char character;
 				do{
-					Clear();
-					WriteLine("Слово: " + wordGuessed);
-					WriteLine("Описание: " + description);
-					Write("Введите букву: ");
-					string input = ReadLine();
+					Console.Clear();
+					Console.WriteLine($"Слово: {wordGuessed}");
+					Console.WriteLine($"Описание: {description}");
+					Console.Write("Введите букву: ");
+					string input = Console.ReadLine();
 					character = (input.Length == 1 && char.IsLetter(input[0])) ? input[0] : '*';
 				}
 				while(character == '*');
 				wordGuessed = WordGuess.ShowCharacters(word, wordGuessed, WordGuess.FindCharacterOccurences(word, character));
 			}
 			while(word != wordGuessed);
-			WriteLine($"Слово \"{wordGuessed}\" отгадано!");
+			Console.WriteLine($"Слово \"{wordGuessed}\" отгадано!");
+			Console.ReadLine();
 		}
 	}
 }
